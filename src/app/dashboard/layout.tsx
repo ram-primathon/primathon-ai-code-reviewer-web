@@ -1,10 +1,10 @@
 import Sidebar from "@prima/components/Sidebar";
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <section className='flex h-screen overflow-hidden'>
       <Sidebar />
@@ -12,4 +12,6 @@ export default function RootLayout({
       <div className='flex h-screen overflow-hidden flex-1'>{children}</div>
     </section>
   );
-}
+};
+
+export default RootLayout;

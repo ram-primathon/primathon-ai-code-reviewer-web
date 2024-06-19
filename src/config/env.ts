@@ -1,5 +1,7 @@
 const ENV = {
   GITHUB_APP_URL: process.env.NEXT_PUBLIC_GITHUB_APP_URL,
+  GITHUB_APP_NAME: process.env.NEXT_PUBLIC_GITHUB_APP_NAME,
+  GITHUB_APP_CLIENT_ID: process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_ID,
 };
 
 export default ENV;

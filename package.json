@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=3000 next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=3050 next start",
     "lint": "next lint",
     "test": "pnpm run lint && pnpm run build",
     "prepare": "husky"
