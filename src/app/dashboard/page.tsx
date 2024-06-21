@@ -1,4 +1,14 @@
-export default function Dashboard() {
+import { fetchGithubUser } from "@prima/api";
+import { COOKIE_NAME } from "@prima/middleware";
+import { cookies } from "next/headers";
+
+export default async function Dashboard() {
+  const token = cookies().get(COOKIE_NAME.JWT_TOKEN);
+
+  const data = await fetchGithubUser(token);
+
+  console.log(data);
+
   return (
     <main className='p-8 bg-gray-100 overflow-y-auto'>
       <h2 className='text-2xl leading-8 mb-2'>Dashboard</h2>

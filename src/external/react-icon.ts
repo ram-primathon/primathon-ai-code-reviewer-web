@@ -8,3 +8,4 @@ export { BsPlugin } from "react-icons/bs";
 export { CiSettings, CiDollar } from "react-icons/ci";
 export { RiGitRepositoryCommitsLine } from "react-icons/ri";
 export { RxDashboard } from "react-icons/rx";
+export { AiOutlineLoading3Quarters } from "react-icons/ai";

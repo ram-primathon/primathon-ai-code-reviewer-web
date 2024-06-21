@@ -20,8 +20,16 @@ import {
 } from "@prima/external/react-icon";
 import { showToast } from "@prima/utils/showToast";
 import { UNEXPECTED_ERROR_MESSAGE } from "@prima/constants/ErrorMessage";
+import { useRouter } from "next/navigation";
+import { GitHubUser } from "@prima/api/interface";
 
-const Sidebar = () => {
+interface SidebarProps {
+  user: GitHubUser | null;
+}
+
+const Sidebar = ({ user }: SidebarProps) => {
+  const router = useRouter();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [synchronizing, setSynchronizing] = useState(false);
@@ -49,6 +57,22 @@ const Sidebar = () => {
     }
   };
 
+  const onLogout = async () => {
+    try {
+      const response = await fetch("/api/oauth/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => res.json());
+      if (response.isSuccess) {
+        router.replace("/");
+      } else {
+        showToast(UNEXPECTED_ERROR_MESSAGE, "success");
+      }
+    } catch (error) {
+      showToast(UNEXPECTED_ERROR_MESSAGE, "error");
+    }
+  };
+
   return (
     <div
       className={`flex flex-col ${
@@ -65,7 +89,7 @@ const Sidebar = () => {
             <>
               <div className='flex-1'>
                 <span className='text-lg font-semibold flex-1 whitespace-nowrap'>
-                  ram-primathon
+                  {user?.login}
                 </span>
                 <p className='text-xs text-gray-500'>Change Organization</p>
               </div>
@@ -142,7 +166,7 @@ const Sidebar = () => {
           {!isCollapsed && (
             <>
               <Image
-                src='https://avatars.githubusercontent.com/u/59244208?v=4'
+                src={user?.avatar_url as string}
                 width={40}
                 height={40}
                 alt='Picture of the repository host'
@@ -150,9 +174,11 @@ const Sidebar = () => {
               />
               <div className='flex-1'>
                 <h3 className='text-lg font-semibold whitespace-nowrap'>
-                  ram-primathon
+                  {user?.login}
                 </h3>
-                <p className='text-xs text-gray-500'>Admin</p>
+                <p className='text-xs text-gray-500'>
+                  {user?.site_admin ? "Admin" : "User"}
+                </p>
               </div>
             </>
           )}
@@ -160,7 +186,7 @@ const Sidebar = () => {
             className={`hover:bg-gray-100 p-2 rounded ${
               isCollapsed ? "px-4 py-3" : "p-2"
             }`}
-            onClick={() => console.log("Logout")}
+            onClick={onLogout}
           >
             <IoLogOutOutline size='24' />
           </button>
@@ -170,7 +196,12 @@ const Sidebar = () => {
           className='mx-3 mb-1 px-4 py-2 cursor-pointer flex gap-2 items-center hover:bg-gray-100 rounded border'
           onClick={toggleCollapse}
         >
-          <TbLayoutSidebarLeftCollapse size='24' />
+          <TbLayoutSidebarLeftCollapse
+            size='24'
+            className={
+              isCollapsed ? "transition-all rotate-180" : "transition-all"
+            }
+          />
           {!isCollapsed && <p className='text-sm'>Collapse</p>}
         </div>
       </div>
