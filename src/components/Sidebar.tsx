@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
 
 import ENV from "@prima/config/env";
-import { getSynchronized } from "@prima/api";
 import { useOutsideClick } from "@prima/hooks";
 import { SIDEBAR_MENU_LINK } from "@prima/constants/SidebarMenu";
 import {
@@ -21,15 +20,16 @@ import {
 import { showToast } from "@prima/utils/showToast";
 import { UNEXPECTED_ERROR_MESSAGE } from "@prima/constants/ErrorMessage";
 import { useRouter } from "next/navigation";
-import { GitHubUser } from "@prima/api/interface";
+import { IGitHubUser } from "@prima/api/IGitHubUser";
+import { fetchGithubUser, getSynchronized } from "@prima/api";
 
 interface SidebarProps {
-  user: GitHubUser | null;
+  token: string;
 }
 
-const Sidebar = ({ user }: SidebarProps) => {
+const Sidebar = ({ token }: SidebarProps) => {
   const router = useRouter();
-
+  const [user, setUser] = useState<IGitHubUser | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [synchronizing, setSynchronizing] = useState(false);
@@ -72,6 +72,24 @@ const Sidebar = ({ user }: SidebarProps) => {
       showToast(UNEXPECTED_ERROR_MESSAGE, "error");
     }
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await fetchGithubUser(token);
+        if (response.data) {
+          setUser(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (token) {
+      getUser();
+    } else {
+      showToast("Token is not available", "error");
+    }
+  }, [token]);
 
   return (
     <div
@@ -166,7 +184,7 @@ const Sidebar = ({ user }: SidebarProps) => {
           {!isCollapsed && (
             <>
               <Image
-                src={user?.avatar_url as string}
+                src={(user?.avatar_url as string) || "/assets/default-user.png"}
                 width={40}
                 height={40}
                 alt='Picture of the repository host'

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+
 import { ToastContainer } from "@prima/external/react-toastify";
 
 import "./globals.css";
@@ -23,8 +25,7 @@ export default function RootLayout({
         <link rel='icon' href='/favicon.ico' sizes='any' />
       </head>
       <body className={inter.className}>
-        {children}
-
+        <AntdRegistry>{children}</AntdRegistry>
         <ToastContainer />
       </body>
     </html>

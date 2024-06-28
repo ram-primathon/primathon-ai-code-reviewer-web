@@ -15,9 +15,10 @@ export async function GET(request: Request) {
 
   try {
     const response = await loginWithGithub(code);
+
     if (response.isSuccess) {
-      const { jwtToken } = response.data;
-      cookies().set(COOKIE_NAME.JWT_TOKEN, jwtToken);
+      const jwtToken = response.data;
+      cookies().set(COOKIE_NAME.JWT_TOKEN, jwtToken as string);
 
       return redirectTo(getAppUrl("/dashboard"));
     }

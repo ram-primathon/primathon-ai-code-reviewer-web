@@ -17,14 +17,18 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-  async rewrites() {
-    return [
-      {
-        source: "/github/:path*", // The source starts with '/'
-        destination: "https://github.com/:path*", // This could be your proxy server or actual GitHub URL
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/github/:path*", // The source starts with '/'
+  //       destination: "https://github.com/:path*", // This could be your proxy server or actual GitHub URL
+  //     },
+  //     {
+  //       source: "/github/:path*", // The source starts with '/'
+  //       destination: "https://github.com/:path*", // This could be your proxy server or actual GitHub URL
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;

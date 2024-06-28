@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
-import { createQueryParams } from "./api";
 import ENV from "@prima/config/env";
+import { buildQueryParams } from "./api/utils";
 
 export const COOKIE_NAME = {
   JWT_TOKEN: "jwtToken",
@@ -12,7 +12,7 @@ export const getAppUrl = (
   params: { [key: string]: any } | null = null
 ) => {
   if (params) {
-    return `${ENV.APP_BASE_URL}${path}?${createQueryParams(params)}`;
+    return `${ENV.APP_BASE_URL}${path}?${buildQueryParams(params)}`;
   }
   return `${ENV.APP_BASE_URL}${path}`;
 };

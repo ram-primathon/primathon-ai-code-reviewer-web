@@ -25,9 +25,9 @@ export const SIDEBAR_MENU_LINK = [
     label: "Reports",
   },
   {
-    href: "/dashboard/organization-settings",
+    href: "/dashboard/settings",
     icon: CiSettings,
-    label: "Organization Settings",
+    label: "Settings",
   },
   {
     href: "/dashboard/subscription",

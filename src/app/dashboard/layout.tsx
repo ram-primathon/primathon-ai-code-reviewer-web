@@ -1,27 +1,18 @@
-import { fetchGithubUser } from "@prima/api";
-import { GitHubUser } from "@prima/api/interface";
 import Sidebar from "@prima/components/Sidebar";
 import { COOKIE_NAME } from "@prima/middleware";
 import { cookies } from "next/headers";
 
-const RootLayout = async ({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  let user: GitHubUser | null = null;
-  try {
-    const token = cookies().get(COOKIE_NAME.JWT_TOKEN);
-    user = await fetchGithubUser(token);
-  } catch (error) {
-    console.error(error);
-  }
-
+  const token = cookies().get(COOKIE_NAME.JWT_TOKEN)?.value;
   return (
     <section className='flex h-screen overflow-hidden'>
-      <Sidebar user={user} />
+      <Sidebar token={token as string} />
 
-      <div className='flex h-screen overflow-hidden flex-1'>{children}</div>
+      <div className='flex h-full overflow-hidden flex-1'>{children}</div>
     </section>
   );
 };
