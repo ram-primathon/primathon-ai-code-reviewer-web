@@ -4,7 +4,8 @@
 LOCAL_FOLDER_PATH="/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/.next"
 # List of additional local files to copy to the remote server
 LOCAL_FILES=(
-  "/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/package.json" 
+  "/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/package.json"
+  "/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/pnpm-lock.yaml"  
   "/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/.env.local"
   "/Users/ram/Desktop/Project/primathon-ai-code-reviewer-web/start.sh"
 ) 
